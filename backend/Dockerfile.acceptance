@@ -1,0 +1,38 @@
+# syntax=docker/dockerfile:1
+ARG PLONE_VERSION
+FROM plone/server-builder:${PLONE_VERSION:-6.0.11} as builder
+
+WORKDIR /app
+
+# Add local code
+COPY . .
+
+# Install local requirements and pre-compile mo files
+RUN <<EOT
+    set -e
+    bin/pip install mxdev
+    mv requirements-docker.txt requirements.txt
+    sed -i 's/-e src\/nexus\[test\]/src\/nexus/g' mx.ini
+    bin/mxdev -c mx.ini
+    bin/pip install -r requirements-mxdev.txt
+    bin/pip install plone.app.robotframework>=2.0.0
+    bin/python /compile_mo.py
+    rm -Rf src/
+EOT
+
+FROM plone/server-acceptance:${PLONE_VERSION:-6.0.11}
+
+LABEL maintainer="Praedictiva <felipe.macias@gmail.com>" \
+      org.label-schema.name="nexus-acceptance" \
+      org.label-schema.description="Nexus backend acceptance image." \
+      org.label-schema.vendor="Praedictiva"
+
+ENV CONFIGURE_PACKAGES="plone.restapi,plone.volto,plone.volto.cors,nexus"
+ENV APPLY_PROFILES="nexus:default"
+
+# Copy /app from builder
+COPY --from=builder /app /app
+
+RUN <<EOT
+    ln -s /data /app/var
+EOT

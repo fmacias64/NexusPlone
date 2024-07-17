@@ -1,0 +1,19 @@
+{
+  "portal": [
+    {
+      "email": "felipe.macias@gmail.com",
+      "properties": {
+        "fullname": "Nexus",
+        "location": "World"
+      },
+      "groups": [
+      ],
+      "roles": [
+        "Member"
+      ],
+      "username": "nexus"
+    }
+  ],
+    "team": [
+  ]
+}
