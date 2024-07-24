@@ -8,3 +8,6 @@
  *   Footer,
  * };
  */
+import PresentacionView from './Views/Presentacion';
+
+export { PresentacionView };

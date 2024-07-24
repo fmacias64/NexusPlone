@@ -29,7 +29,8 @@
     "src/addons/volto-nexus"
   ],
   "addons": [
-    "volto-nexus"
+    "volto-nexus",
+    "@plone-collective/volto-authomatic"
   ],
   "jest": {
     "modulePathIgnorePatterns": [
@@ -140,7 +141,9 @@
     "node": "^16 || ^18 || ^20"
   },
   "dependencies": {
-    "@plone/volto": "17.18.2"
+    "@plone-collective/volto-authomatic": "*",
+    "@plone/volto": "17.18.2",
+    "oidc-client": "1.11.5"
   },
   "devDependencies": {
     "@plone/scripts": "^3.3.2",

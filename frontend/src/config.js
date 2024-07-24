@@ -11,8 +11,24 @@
 
 // [Internal] All the imports of modules required for the configuration *must* happen
 // here BEFORE the following line
+// import '@plone/volto/config';
+
+// export default function applyConfig(config) {
+//   return config;
+// }
+
+import { PresentacionView } from './components';
+
+// All your imports required for the config here BEFORE this line
 import '@plone/volto/config';
 
 export default function applyConfig(config) {
+  config.views = {
+    ...config.views,
+    contentTypesViews: {
+      ...config.views.contentTypesViews,
+      presentacion: PresentacionView,
+    },
+  };
   return config;
 }
