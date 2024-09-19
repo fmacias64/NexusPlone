@@ -1,0 +1,91 @@
+import { fetchAIResponse } from '../NexusUtils/nexus_utils'; // Ajusta la ruta si es necesario
+
+import flashSVG from '@plone/volto/icons/flash.svg';
+
+
+flash: {
+    id: 'IA', 
+    defaultMessage: 'Enviar a IA',
+  },
+
+  
+    this.handlePresentationButtonClick =this.handlePresentationButtonClick.bind(this);
+
+
+
+ /**
+   * Funcion que maneja la lcosnulta a ChatGPT
+   * Falta implementar procedimiento de retries 
+   * tambien se debe mandar un identificador unico que debe reconocerse en la respuesta
+   * Debe mandar identificador de usuario unificado, ver Keycloak
+   * @method handlePresentationButtonClick
+   * @returns json
+   */
+ 
+  handlePresentationButtonClick = async () => {
+    const formData = this.form.current.props;
+    console.log('formData pasando a fetchAIResponse:', this);
+    
+    const campo = await fetchAIResponse(formData);
+    this.form.current.state.formData.title=campo;
+    
+   
+    this.forceUpdate();
+  };
+
+
+   console.log('formData:', this.state.formData);
+      
+
+
+{this.props.type === 'punto_de_presentacion' && (
+          <div>
+            <Button
+              primary
+              onClick={() => this.handlePresentationButtonClick()}
+            >
+              <Icon
+                name={flashSVG}
+                className="circled"
+                size="30px"
+                title={this.props.intl.formatMessage(messages.flash)}
+              />
+            </Button>
+          </div>
+        )}
+                
+                   
+
+               
+
+{/* {this.props.type === 'presentacion' && (                
+                 
+  <div>
+    <Button
+      primary
+      onClick={() => {
+        const formData2 = this.form.current.props;
+        const campo=handlePresentationButtonClick(formData2);
+        
+
+    setFormData({
+            ...formData,
+            title: campo, // Actualiza el campo 'title' con el valor de la IA
+            // Actualiza otros campos aquí según sea necesario
+          });
+         
+        //this.form.current.props.globalData.title=campo;
+        alert("Hey: " + campo + ", el thiso : " + this.form.current.props.globalData.title);
+      }}
+    >
+      <Icon
+        name={flashSVG}
+        className="circled"
+        size="30px"
+        title={this.props.intl.formatMessage(messages.flash)}
+      />
+    </Button>
+    
+  </div>
+  
+)} */}

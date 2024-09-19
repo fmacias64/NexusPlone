@@ -1,0 +1,26 @@
+import { handlePresentationButtonClick } from '../NexusUtils/nexus_utils'; // Ajusta la ruta si es necesario
+
+
+
+import flashSVG from '@plone/volto/icons/flash.svg';
+
+
+ flash: {
+    id: 'IA', 
+    defaultMessage: 'Enviar a IA',
+  },
+
+
+                  {this.props.content['@type'] === 'presentacion' && (
+  <div>
+    <Button primary onClick={() => handlePresentationButtonClick(this.props.content)}>
+       <Icon
+                  name={flashSVG}
+                  className="circled"
+                  size="30px"
+                  title={this.props.intl.formatMessage(messages.flash)}
+                />
+    </Button>
+   
+  </div>
+)}

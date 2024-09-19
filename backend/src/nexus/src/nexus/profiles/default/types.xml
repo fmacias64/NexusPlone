@@ -7,4 +7,16 @@
           name="MyType"
   />
 -->
+<object name="dashboard" meta_type="Dexterity FTI"/>
+<object name="chart" meta_type="Dexterity FTI"/>
+<object name="presentacion" meta_type="Dexterity FTI"/>
+<object name="punto_de_presentacion" meta_type="Dexterity FTI"/>
+<object name="dataset" meta_type="Dexterity FTI"/>
+<object name="data_base" meta_type="Dexterity FTI"/>
+<object name="politica_respuesta" meta_type="Dexterity FTI"/>
+<object name="fpn1" meta_type="Dexterity FTI"/>
+<object name="tabla_auxiliar" meta_type="Dexterity FTI"/>
+<object name="resultado_consulta" meta_type="Dexterity FTI"/>
+<object name="servicio" meta_type="Dexterity FTI"/>
+<object name="herramienta" meta_type="Dexterity FTI"/>  
 </object>

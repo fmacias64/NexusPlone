@@ -6,5 +6,19 @@
       component=".industries_vocabulary"
       />
    -->
-
+   <utility
+    name="tabla_auxiliar_vocabulary"
+    component="nexus.vocabularies.vocabularies.TablaAuxiliarVocabulary" />
+   <utility
+    name="data_base_dashboard_vocabulary"
+    component="nexus.vocabularies.vocabularies.DataSourceVocabulary" />
+   <utility
+    name="servicio_vocabulary"
+    component="nexus.vocabularies.vocabularies.ServicioVocabulary" />
+  <utility
+    name="prompts_asociados_vocabulary"
+    component="nexus.vocabularies.vocabularies.PromptAsociadoVocabulary" />
+   <utility
+    name="my_vocabularies_MyContentVocabulary" 
+    component="nexus.vocabularies.vocabularies.my_content_vocabulary" />
 </configure>

@@ -173,13 +173,47 @@ class Add extends Component {
    * @returns json
    */
  
-  handlePresentationButtonClick = async () => {
+
+ // modificar abajo acorde a esto:
+//  handlePresentationButtonClick = async (type, action) => {
+//   const formData = this.form.current.props;
+//   console.log('formData pasando a fetchAIResponse:', this);
+
+//   const campo = await fetchAIResponse(formData);
+//   this.form.current.state.formData.title = campo;
+
+//   // Manejo de casos según el origen y tipo
+//   switch (action) {
+//     case 'add':
+//       console.log('Añadir lógica específica para add');
+//       // Código específico para 'add'
+//       break;
+//     case 'edit':
+//       console.log('Añadir lógica específica para edit');
+//       // Código específico para 'edit'
+//       break;
+//     default:
+//       console.log('Acción no reconocida:', action);
+//   }
+
+//   this.forceUpdate();
+// };
+  handlePresentationButtonClick = async (type, action) => {
     const formData = this.form.current.props;
     console.log('formData pasando a fetchAIResponse:', this);
     
-    const campo = await fetchAIResponse(formData);
-    this.form.current.state.formData.title=campo;
-    
+    const {campo, base_de_datos}  = await fetchAIResponse(formData,type, action);
+    console.log(" el campo", campo);
+    console.log(" el campo23", base_de_datos);
+    if (type == "tabla_auxiliar")
+    {
+      this.form.current.state.formData.query_mysql=campo;
+      this.form.current.state.formData.base_de_datos=base_de_datos;
+    }
+    else
+    {
+    this.form.current.state.formData.codigo_python=campo;
+    }
    
     this.forceUpdate();
   };
@@ -311,6 +345,8 @@ class Add extends Component {
    */
  
   render() {
+    const validTypes = ['punto_de_presentacion', 'tabla_auxiliar', 'presentacion', 'dataset']; // Añade más tipos según sea necesario
+    const actionType = 'add';
     //alert('Form has been submitted');
     if (this.props.schemaRequest.loaded) {
       const visual = hasBlocksData(this.props.schema.properties);
@@ -494,12 +530,13 @@ class Add extends Component {
                     </Button>
 
 
-{this.props.type === 'punto_de_presentacion' && (
+
+{validTypes.includes(this.props.type) && (
           <div>
             <Button
               primary
-              onClick={() => this.handlePresentationButtonClick()}
-            >
+              onClick={() => this.handlePresentationButtonClick(this.props.type, actionType)}
+           >
               <Icon
                 name={flashSVG}
                 className="circled"

@@ -10,4 +10,32 @@
   <!-- Metadata
   <column value="industry" />
 -->
+<index name="id_dashboard" meta_type="FieldIndex">
+    <indexed_attr value="id_dashboard"/>
+  </index>
+  <index name="chart_id" meta_type="FieldIndex">
+    <indexed_attr value="chart_id"/>
+  </index>
+  <index name="id_chart" meta_type="FieldIndex">
+    <indexed_attr value="id_chart"/>
+  </index>
+   <index name="id_dataset" meta_type="FieldIndex">
+    <indexed_attr value="id_dataset"/>
+  </index>
+  <index name="tablas_auxiliares" meta_type="FieldIndex">
+    <indexed_attr value="tablas_auxiliares"/>
+  </index>
+  <index name="tipo_de_prompt" meta_type="FieldIndex">
+    <indexed_attr value="tipo_de_prompt"/>
+  </index>
+  <index name="schedule" meta_type="FieldIndex">
+    <indexed_attr value="schedule"/>
+  </index>
+  <index name="trigger" meta_type="FieldIndex">
+    <indexed_attr value="trigger"/>
+  </index>
+  <index name="dashboard_asignado" meta_type="FieldIndex">
+    <indexed_attr value="dashboard_asignado"/>
+  </index>
 </object>
+

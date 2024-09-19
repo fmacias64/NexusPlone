@@ -15,7 +15,8 @@ import { Portal } from 'react-portal';
 import qs from 'query-string';
 import { find } from 'lodash';
 import { toast } from 'react-toastify';
-import { handlePresentationButtonClick } from '../NexusUtils/nexus_utils'; // Ajusta la ruta si es necesario
+//import { handlePresentationButtonClick } from '../NexusUtils/nexus_utils'; // Ajusta la ruta si es necesario
+import { fetchAIResponse } from '../NexusUtils/nexus_utils'; // Ajusta la ruta si es necesario
 
 
 import {
@@ -149,6 +150,35 @@ class Edit extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+ /**
+   * Funcion que maneja la lcosnulta a ChatGPT
+   * Falta implementar procedimiento de retries 
+   * tambien se debe mandar un identificador unico que debe reconocerse en la respuesta
+   * Debe mandar identificador de usuario unificado, ver Keycloak
+   * @method handlePresentationButtonClick
+   * @returns json
+   */
+ 
+ handlePresentationButtonClick = async (type, action) => {
+  const formData = this.form.current.props;
+  
+  //eltype=this.props.content?.['@type'];
+  console.log('formData pasando a fetchAIResponse:', this.props.content?.['@type']," ",action);
+  console.log("el props",this.props)
+  const {campo, base_de_datos} = await fetchAIResponse(formData,type, action);
+  if (type == "tabla_auxiliar")
+  {
+    this.form.current.state.formData.query_mysql=campo;
+    this.form.current.state.formData.base_de_datos=base_de_datos;
+  }
+  else
+  {
+  this.form.current.state.formData.codigo_python=campo;
+  }
+ 
+  this.forceUpdate();
+};
+
   /**
    * Component did mount
    * @method componentDidMount
@@ -281,6 +311,11 @@ class Edit extends Component {
       this.setState({ newId: data.id });
     }
     this.props.updateContent(getBaseUrl(this.props.pathname), data, headers);
+    //console.log("el dta",data);
+    //alert("Hey: , el thiso : " );
+    //Aqui poner el content rule por creacion de tipo de dato, no funcionaria si se realiza por api
+    // si se hace via api, habria que hacer susecuentes llamadas a otros apis
+ 
   }
 
   /**
@@ -326,6 +361,8 @@ class Edit extends Component {
    * @returns {string} Markup for the component.
    */
   render() {
+    const validTypes = ['punto_de_presentacion', 'dataset','tabla_auxiliar', 'presentacion']; // Añade más tipos según sea necesario
+    const actionType = 'edit';
     const editPermission = find(this.props.objectActions, { id: 'edit' });
 
     const pageEdit = (
@@ -477,21 +514,22 @@ class Edit extends Component {
                       title={this.props.intl.formatMessage(messages.cancel)}
                     />
                   </Button>
-                  
+        {validTypes.includes(this.props.content?.['@type']) && (
+          <div>
+            <Button
+              primary
+              onClick={() => this.handlePresentationButtonClick(this.props.content?.['@type'], actionType)}
+           >
+              <Icon
+                name={flashSVG}
+                className="circled"
+                size="30px"
+                title={this.props.intl.formatMessage(messages.flash)}
+              />
+            </Button>
+          </div>
+        )}
 
-                  {this.props.content['@type'] === 'presentacion' && (
-  <div>
-    <Button primary onClick={() => handlePresentationButtonClick(this.props.content)}>
-       <Icon
-                  name={flashSVG}
-                  className="circled"
-                  size="30px"
-                  title={this.props.intl.formatMessage(messages.flash)}
-                />
-    </Button>
-   
-  </div>
-)}
 
                   {config.settings.isMultilingual && (
                     <CompareLanguages
@@ -505,6 +543,7 @@ class Edit extends Component {
                       toolbarRef={this.toolbarRef}
                     />
                   )}
+                  
                 </>
               }
             />
